@@ -42,7 +42,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ShoppingCartSerializer(serializers.ModelSerializer):
     """Сериализатор отдельного элемента корзины."""
 
-    product = serializers.StringRelatedField()  # Или используйте другой сериализатор для Product
+    product = serializers.StringRelatedField()
 
     class Meta:
         model = ShoppingCart
@@ -52,7 +52,8 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     """Сериализатор корзины пользователя."""
 
-    products = ShoppingCartSerializer(source='shopping_carts', many=True, read_only=True)
+    products = ShoppingCartSerializer(
+        source='shopping_carts', many=True, read_only=True)
     total_quantity = serializers.SerializerMethodField()
     total_price = serializers.SerializerMethodField()
 
