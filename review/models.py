@@ -53,6 +53,7 @@ class Category(MPTTModel):
 
     # Можем убрать проверку, что бы у нас было множественное наследование
     def clean(self):
+        super().clean()
         if self.parent and self.parent.parent is not None:
             raise ValidationError('Подкатегория может быть только дочерней к верхнеуровневой категории.')
         existing_children = Category.objects.filter(
@@ -106,13 +107,13 @@ class Product(models.Model):
         'Описание продукта', max_length=555
     )
     publish = models.DateTimeField(
-        'Дата публикации', default=timezone.now()
+        'Дата публикации', default=timezone.now(),
     )
     created = models.DateTimeField(
-        'Дата добавления', auto_now_add=True
+        'Дата добавления', auto_now_add=True,
     )
     updated = models.DateTimeField(
-        'Дата обновления', auto_now=True
+        'Дата обновления', auto_now=True,
     )
 
     def clean(self):
@@ -134,14 +135,17 @@ class ShoppingCart(models.Model):
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE,
-        verbose_name='Пользователь'
+        verbose_name='Пользователь',
+        related_name='shopping_carts',
     )
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE,
-        verbose_name='Продукт'
+        verbose_name='Продукт',
+        related_name='shopping_carts',
     )
     quantity = models.PositiveIntegerField(
-        'Количество', default=1)
+        'Количество', default=1,
+    )
 
     class Meta:
         unique_together = ('user', 'product')
@@ -150,4 +154,4 @@ class ShoppingCart(models.Model):
         verbose_name_plural = 'Списки покупок'
 
     def __str__(self):
-        return f'Список покупок пользователя: {self.user}'
+        return f"{self.user.username} - {self.product.title}"

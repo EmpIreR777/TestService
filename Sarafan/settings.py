@@ -18,13 +18,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
     'djoser',
+    'drf_spectacular',
+    'mptt',
+
     'api_v1.apps.ApiV1Config',
     'review.apps.ReviewConfig',
     'user.apps.UserConfig',
-    'drf_spectacular',
-    'mptt',
 ]
 
 MIDDLEWARE = [

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from review.models import Category, Product, ShoppingCart
-
+from user.models import User
 
 class CategorySerializer(serializers.ModelSerializer):
     """Сериализации объектов модели Category и её иерархии."""
@@ -27,7 +27,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     """Сериализации объектов продуктов."""
-    
+
     category = CategorySerializer()
 
     class Meta:
@@ -40,9 +40,29 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ShoppingCartSerializer(serializers.ModelSerializer):
-    """Сериализатор корзины."""
+    """Сериализатор отдельного элемента корзины."""
+
+    product = serializers.StringRelatedField()  # Или используйте другой сериализатор для Product
 
     class Meta:
         model = ShoppingCart
-        fields = ('user', 'product', 'quantity')
+        fields = ('product', 'quantity')
 
+
+class CartSerializer(serializers.ModelSerializer):
+    """Сериализатор корзины пользователя."""
+
+    products = ShoppingCartSerializer(source='shopping_carts', many=True, read_only=True)
+    total_quantity = serializers.SerializerMethodField()
+    total_price = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['products', 'total_quantity', 'total_price']
+
+    def get_total_quantity(self, obj):
+        return sum(item.quantity for item in obj.shopping_carts.all())
+
+    def get_total_price(self, obj):
+        return sum(item.product.price * item.quantity
+                   for item in obj.shopping_carts.all())

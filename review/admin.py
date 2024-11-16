@@ -10,9 +10,15 @@ from .models import Category, Product, ShoppingCart
 class CategoryAdmin(DraggableMPTTAdmin):
     """Админ-панель модели категорий."""
 
-    list_filter = ('title', 'slug')
-    search_fields = ('slug',)
-    prepopulated_fields = {'slug': ('title',)}
+    list_filter = (
+        'title', 'slug'
+    )
+    search_fields = (
+        'slug',
+    )
+    prepopulated_fields = {
+        'slug': ('title',)
+    }
     list_display = (
         'indented_title',
         'tree_actions',
@@ -42,16 +48,24 @@ def published_true(modelAdmin, request, queryset):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    """Админ-панель модели Продуктов."""
+    """Админ-панель модели продуктов."""
 
     actions = [
         published_true,
         published_false,
     ]
-    list_filter = ('title', 'slug', 'category')
-    search_fields = ('title', 'slug')
-    prepopulated_fields = {'slug': ('title',)}
-    list_display_links = ('id', 'title')
+    list_filter = (
+        'title', 'slug', 'category',
+    )
+    search_fields = (
+        'title', 'slug',
+    )
+    prepopulated_fields = {
+        'slug': ('title',)
+    }
+    list_display_links = (
+        'id', 'title'
+    )
     list_display = (
         'id',
         'title',
@@ -61,6 +75,11 @@ class ProductAdmin(admin.ModelAdmin):
         'category',
     )
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.select_related('category')
+
+    @admin.display(description='Изображение')
     def show_image(self, obj):
         if obj.image:
             return format_html(
@@ -68,19 +87,32 @@ class ProductAdmin(admin.ModelAdmin):
                 obj.image.url)
         return 'Нет изображения'
 
-    show_image.short_description = 'Изображение'
-
 
 @admin.register(ShoppingCart)
 class ShoppingCartAdmin(admin.ModelAdmin):
     """Админ-панель модели корзина."""
 
     list_filter = (
+        'user',
         'product',
     )
-    list_display = ('user', 'product', 'quantity')
+    list_display = (
+        'user', 'product',
+        'quantity', 'get_price'
+    )
+    list_editable = ('quantity',)
+    list_display_links = ('user',)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.select_related('product')
+
+    @admin.display(description='Цена')
+    def get_price(self, obj):
+        total_price = obj.product.price * obj.quantity
+        return f'{total_price} ₽'
 
 
-admin.site.empty_value_display = 'Не задано'
 admin.site.site_header = 'Sarafan-shop'
 admin.site.index_title = 'Админ панель магазина продуктов - Sarafan-shop'
+admin.site.empty_value_display = 'Не задано'
