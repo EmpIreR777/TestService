@@ -11,10 +11,12 @@ Django==4.2
 django-js-asset==2.2.0
 django-mptt==0.16.0
 django-templated-mail==1.1.1
+django-versatileimagefield==3.1
 djangorestframework==3.15.2
 djangorestframework-simplejwt==4.7.2
 djoser==2.1.0
 drf-spectacular==0.27.2
+Faker==33.0.0
 idna==3.10
 inflection==0.5.1
 itypes==1.2.0
@@ -26,6 +28,8 @@ oauthlib==3.2.2
 pillow==11.0.0
 pycparser==2.22
 PyJWT==2.9.0
+python-dateutil==2.9.0.post0
+python-magic==0.4.27
 python3-openid==3.2.0
 PyYAML==6.0.2
 referencing==0.35.1
@@ -37,5 +41,6 @@ six==1.16.0
 social-auth-app-django==4.0.0
 social-auth-core==4.5.4
 sqlparse==0.5.2
+typing_extensions==4.12.2
 uritemplate==4.1.1
 urllib3==2.2.3
