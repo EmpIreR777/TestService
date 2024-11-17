@@ -6,10 +6,24 @@ from mptt.admin import DraggableMPTTAdmin
 from .models import Category, Product, ShoppingCart
 
 
+@admin.action(description='Снять с публикации')
+def published_false(modelAdmin, request, queryset):
+    queryset.update(is_published=False)
+
+
+@admin.action(description='Поставить на публикацию')
+def published_true(modelAdmin, request, queryset):
+    queryset.update(is_published=True)
+
+
 @admin.register(Category)
 class CategoryAdmin(DraggableMPTTAdmin):
     """Админ-панель модели категорий."""
 
+    actions = [
+            published_true,
+            published_false,
+        ]
     list_filter = (
         'title', 'slug'
     )
@@ -20,6 +34,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
         'slug': ('title',)
     }
     list_display = (
+        'id',
         'indented_title',
         'tree_actions',
         'show_image',
@@ -34,16 +49,6 @@ class CategoryAdmin(DraggableMPTTAdmin):
         return 'Нет изображения'
 
     show_image.short_description = 'Изображение'
-
-
-@admin.action(description='Снять с публикации')
-def published_false(modelAdmin, request, queryset):
-    queryset.update(is_published=False)
-
-
-@admin.action(description='Поставить на публикацию')
-def published_true(modelAdmin, request, queryset):
-    queryset.update(is_published=True)
 
 
 @admin.register(Product)

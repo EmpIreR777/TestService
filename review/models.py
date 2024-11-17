@@ -1,10 +1,13 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 
 from mptt.models import MPTTModel, TreeForeignKey
 
-from user.models import User
+
+User = get_user_model()
+
 
 class Category(MPTTModel):
     """Модель категорий с вложеностью."""
@@ -24,6 +27,7 @@ class Category(MPTTModel):
         'Изображение категории',
         upload_to='category/',
         help_text='Добавьте изображение.',
+        blank=True, null=True
     )
     parent = TreeForeignKey(
         'self',
@@ -41,7 +45,7 @@ class Category(MPTTModel):
         help_text='Нажмите на если хотите опубликовать категорию.',
     )
     publish = models.DateTimeField(
-        'Дата публикации', default=timezone.now()
+        'Дата публикации', default=timezone.now
     )
 
     class MPTTMeta:
@@ -83,6 +87,7 @@ class Product(models.Model):
         'Изображение продуктов',
         upload_to='product/',
         help_text='Добавьте изображение.',
+        blank=True, null=True,
     )
     price = models.DecimalField(
         'Цена продукта',
@@ -107,7 +112,7 @@ class Product(models.Model):
         'Описание продукта', max_length=555
     )
     publish = models.DateTimeField(
-        'Дата публикации', default=timezone.now(),
+        'Дата публикации', default=timezone.now
     )
     created = models.DateTimeField(
         'Дата добавления', auto_now_add=True,
@@ -125,6 +130,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        ordering = ('-publish',)
 
     def __str__(self):
         return self.title

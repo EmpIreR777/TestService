@@ -1,7 +1,11 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
 from review.models import Category, Product, ShoppingCart
-from user.models import User
+
+
+User = get_user_model()
+
 
 class CategorySerializer(serializers.ModelSerializer):
     """Сериализации объектов модели Category и её иерархии."""
