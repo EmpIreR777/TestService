@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 from review.models import Category, Product, ShoppingCart
 
 
@@ -14,29 +15,32 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['title', 'slug', 'image', 'children']
+        fields = ['id', 'title',
+                  'slug', 'image',
+                  'children'
+                  ]
 
     def get_children(self, obj):
         children = obj.children.all()
-        if not children.exists():
-            return None
         return CategorySerializer(children, many=True).data
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        if representation['children'] is None:
-            representation.pop('children')
-        return representation
 
 
 class ProductSerializer(serializers.ModelSerializer):
     """Сериализации объектов продуктов."""
 
     category = CategorySerializer()
+    image = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'),
+            ('medium_square_crop', 'crop__300x300'),
+        ]
+    )
 
     class Meta:
         model = Product
         fields = [
+            'id',
             'title', 'slug',
             'price', 'image',
             'category',
@@ -46,11 +50,19 @@ class ProductSerializer(serializers.ModelSerializer):
 class ShoppingCartSerializer(serializers.ModelSerializer):
     """Сериализатор отдельного элемента корзины."""
 
-    product = serializers.StringRelatedField()
+    product = ProductSerializer()
 
     class Meta:
         model = ShoppingCart
         fields = ('product', 'quantity')
+
+
+class PutShoppingCartSerializer(serializers.ModelSerializer):
+    """Сериализатор отдельного элемента корзины."""
+
+    class Meta:
+        model = ShoppingCart
+        fields = ('quantity',)
 
 
 class CartSerializer(serializers.ModelSerializer):

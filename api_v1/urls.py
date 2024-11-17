@@ -10,8 +10,8 @@ from .views import CategoryViewSet, ProductViewSet
 
 v1_router = DefaultRouter()
 
-v1_router.register(r'category', CategoryViewSet, basename='category')
-v1_router.register(r'product', ProductViewSet, basename='product')
+v1_router.register(r'categories', CategoryViewSet, basename='categories')
+v1_router.register(r'products', ProductViewSet, basename='products')
 
 
 urlpatterns = [

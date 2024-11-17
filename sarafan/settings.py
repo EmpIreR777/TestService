@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'djoser',
     'drf_spectacular',
     'mptt',
+    'versatileimagefield',
 
     'api_v1.apps.ApiV1Config',
     'review.apps.ReviewConfig',
@@ -39,7 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Sarafan.urls'
+ROOT_URLCONF = 'sarafan.urls'
 
 TEMPLATES = [
     {
@@ -57,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Sarafan.wsgi.application'
+WSGI_APPLICATION = 'sarafan.wsgi.application'
 
 
 DATABASES = {

@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
+from versatileimagefield.fields import VersatileImageField, PPOIField
 from mptt.models import MPTTModel, TreeForeignKey
 
 
@@ -55,16 +55,6 @@ class Category(MPTTModel):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
-    # Можем убрать проверку, что бы у нас было множественное наследование
-    def clean(self):
-        super().clean()
-        if self.parent and self.parent.parent is not None:
-            raise ValidationError('Подкатегория может быть только дочерней к верхнеуровневой категории.')
-        existing_children = Category.objects.filter(
-            parent=self.parent).exclude(pk=self.pk)
-        if not self.image:
-            raise ValidationError('Изображение категории обязательно.')
-
     def __str__(self):
         return self.title
 
@@ -83,12 +73,14 @@ class Product(models.Model):
         unique=True,
         help_text='Добавьте слаг.',
     )
-    image = models.ImageField(
+    image = VersatileImageField(
         'Изображение продуктов',
         upload_to='product/',
+        ppoi_field='image_ppoi',
         help_text='Добавьте изображение.',
         blank=True, null=True,
     )
+    image_ppoi = PPOIField()
     price = models.DecimalField(
         'Цена продукта',
         max_digits=10,
@@ -109,7 +101,7 @@ class Product(models.Model):
         help_text='Выберите категорию, к которой относится продукт.',
     )
     description = models.TextField(
-        'Описание продукта', max_length=555
+        'Описание продукта'
     )
     publish = models.DateTimeField(
         'Дата публикации', default=timezone.now
@@ -120,12 +112,6 @@ class Product(models.Model):
     updated = models.DateTimeField(
         'Дата обновления', auto_now=True,
     )
-
-    def clean(self):
-        super().clean()
-        if self.category and self.category.parent is None:
-            raise ValidationError({
-                'category': 'Выберите подкатегорию (дочернюю категорию), а не родительскую.'})
 
     class Meta:
         verbose_name = 'Продукт'

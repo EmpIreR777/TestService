@@ -1,0 +1,172 @@
+[
+{
+    "model": "review.product",
+    "pk": 1,
+    "fields": {
+        "title": "Помидор",
+        "slug": "pomidor",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "1.20",
+        "is_published": true,
+        "category": 1,
+        "description": "Свежий и сочный помидор. Отлично подходит для салатов.",
+        "publish": "2024-11-17T20:44:17Z",
+        "created": "2024-11-17T20:44:27.317Z",
+        "updated": "2024-11-17T21:11:34.286Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 2,
+    "fields": {
+        "title": "Яблоко",
+        "slug": "yabloko",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "0.80",
+        "is_published": true,
+        "category": 2,
+        "description": "Сладкое и хрустящее яблоко. Полезно для здоровья.",
+        "publish": "2024-11-17T21:13:06Z",
+        "created": "2024-11-17T21:13:28.927Z",
+        "updated": "2024-11-17T21:13:28.927Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 3,
+    "fields": {
+        "title": "Шоколадные печенья",
+        "slug": "shokoladnye-pechenya",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "2.50",
+        "is_published": true,
+        "category": 8,
+        "description": "Натуральный шоколадные печенья с высоким содержанием какао.",
+        "publish": "2024-11-17T21:13:28Z",
+        "created": "2024-11-17T21:14:14.329Z",
+        "updated": "2024-11-17T21:14:14.329Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 4,
+    "fields": {
+        "title": "Молоко",
+        "slug": "moloko",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "1.50",
+        "is_published": false,
+        "category": 7,
+        "description": "Свежевыжатое молоко. Отличный источник кальция.",
+        "publish": "2024-11-17T21:14:14Z",
+        "created": "2024-11-17T21:14:44.571Z",
+        "updated": "2024-11-17T21:14:44.571Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 5,
+    "fields": {
+        "title": "ris",
+        "slug": "ris",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "1.00",
+        "is_published": true,
+        "category": 5,
+        "description": "Качественный рис, идеально подходит для приготовления различных блюд.",
+        "publish": "2024-11-17T21:15:21Z",
+        "created": "2024-11-17T21:15:39.847Z",
+        "updated": "2024-11-17T21:15:39.847Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 6,
+    "fields": {
+        "title": "Перец",
+        "slug": "perec",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "1.30",
+        "is_published": true,
+        "category": 1,
+        "description": "Яркий и вкусный перец для салатов и основных блюд.",
+        "publish": "2024-11-17T21:15:39Z",
+        "created": "2024-11-17T21:16:05.477Z",
+        "updated": "2024-11-17T21:16:05.477Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 7,
+    "fields": {
+        "title": "Груша",
+        "slug": "grusha",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "0.90",
+        "is_published": true,
+        "category": 2,
+        "description": "Сочная груша. Прекрасно утоляет жажду.",
+        "publish": "2024-11-17T21:16:05Z",
+        "created": "2024-11-17T21:16:20.340Z",
+        "updated": "2024-11-17T21:16:20.340Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 8,
+    "fields": {
+        "title": "Творог",
+        "slug": "tvorog",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "1.80",
+        "is_published": true,
+        "category": 7,
+        "description": "Натуральный творог из свежего молока.",
+        "publish": "2024-11-17T21:16:21Z",
+        "created": "2024-11-17T21:16:41.433Z",
+        "updated": "2024-11-17T21:16:41.433Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 9,
+    "fields": {
+        "title": "Овсянка",
+        "slug": "ovsyanka",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "0.70",
+        "is_published": true,
+        "category": 5,
+        "description": "Полезная овсянка для завтрака, богата клетчаткой.",
+        "publish": "2024-11-17T21:16:41Z",
+        "created": "2024-11-17T21:16:56.961Z",
+        "updated": "2024-11-17T21:16:56.961Z"
+    }
+},
+{
+    "model": "review.product",
+    "pk": 10,
+    "fields": {
+        "title": "Конфеты",
+        "slug": "konfety",
+        "image": "",
+        "image_ppoi": "0.5x0.5",
+        "price": "3.00",
+        "is_published": false,
+        "category": 8,
+        "description": "Ассорти конфет, созданное с любовью.",
+        "publish": "2024-11-17T21:17:07Z",
+        "created": "2024-11-17T21:17:24.133Z",
+        "updated": "2024-11-17T21:17:24.133Z"
+    }
+}
+]

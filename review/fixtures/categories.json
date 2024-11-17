@@ -1,0 +1,130 @@
+[
+{
+    "model": "review.category",
+    "pk": 1,
+    "fields": {
+        "title": "Овощи",
+        "slug": "ovoshchi",
+        "image": "",
+        "parent": 6,
+        "is_published": true,
+        "publish": "2024-11-17T20:38:26Z",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "review.category",
+    "pk": 2,
+    "fields": {
+        "title": "Фрукты",
+        "slug": "frukty",
+        "image": "category/default.jpg",
+        "parent": 6,
+        "is_published": true,
+        "publish": "2024-11-17T20:44:06Z",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "review.category",
+    "pk": 3,
+    "fields": {
+        "title": "Сладости",
+        "slug": "sladosti",
+        "image": "",
+        "parent": null,
+        "is_published": true,
+        "publish": "2024-11-17T21:04:43Z",
+        "lft": 1,
+        "rght": 4,
+        "tree_id": 8,
+        "level": 0
+    }
+},
+{
+    "model": "review.category",
+    "pk": 4,
+    "fields": {
+        "title": "Молочные продукты",
+        "slug": "molochnye-produkty",
+        "image": "",
+        "parent": null,
+        "is_published": true,
+        "publish": "2024-11-17T21:05:54Z",
+        "lft": 1,
+        "rght": 4,
+        "tree_id": 7,
+        "level": 0
+    }
+},
+{
+    "model": "review.category",
+    "pk": 5,
+    "fields": {
+        "title": "Зерновые",
+        "slug": "zernovye",
+        "image": "",
+        "parent": 6,
+        "is_published": true,
+        "publish": "2024-11-17T21:06:21Z",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "review.category",
+    "pk": 6,
+    "fields": {
+        "title": "Огород",
+        "slug": "ogorod",
+        "image": "",
+        "parent": null,
+        "is_published": true,
+        "publish": "2024-11-17T21:07:13Z",
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 2,
+        "level": 0
+    }
+},
+{
+    "model": "review.category",
+    "pk": 7,
+    "fields": {
+        "title": "Молочная продукция",
+        "slug": "moloko",
+        "image": "",
+        "parent": 4,
+        "is_published": true,
+        "publish": "2024-11-17T21:09:31Z",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 7,
+        "level": 1
+    }
+},
+{
+    "model": "review.category",
+    "pk": 8,
+    "fields": {
+        "title": "Печенье",
+        "slug": "pechene",
+        "image": "",
+        "parent": 3,
+        "is_published": true,
+        "publish": "2024-11-17T21:10:36Z",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 8,
+        "level": 1
+    }
+}
+]

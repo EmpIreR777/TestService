@@ -41,14 +41,13 @@ class CategoryAdmin(DraggableMPTTAdmin):
         'slug',
     )
 
+    @admin.display(description='Изображение')
     def show_image(self, obj):
         if obj.image:
             return format_html(
                 '<img src="{}" style="width: 50px; height: 50px;"/>',
                 obj.image.url)
-        return 'Нет изображения'
-
-    show_image.short_description = 'Изображение'
+        return format_html('<img src="{}" style="width: 90px; height: 55px;"/>', '/media/category/default.jpg')
 
 
 @admin.register(Product)
@@ -90,7 +89,7 @@ class ProductAdmin(admin.ModelAdmin):
             return format_html(
                 '<img src="{}" style="width: 50px; height: 50px;"/>',
                 obj.image.url)
-        return 'Нет изображения'
+        return format_html('<img src="{}" style="width: 90px; height: 55px;"/>', '/media/product/default.jpg')
 
 
 @admin.register(ShoppingCart)
@@ -112,7 +111,7 @@ class ShoppingCartAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
         return queryset.select_related('product')
 
-    @admin.display(description='Цена')
+    @admin.display(description='Стоимость')
     def get_price(self, obj):
         total_price = obj.product.price * obj.quantity
         return f'{total_price} ₽'

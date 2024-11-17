@@ -4,30 +4,28 @@ from rest_framework.decorators import action
 from rest_framework import status
 
 from review.models import Category, Product, ShoppingCart
-from .permissions import IsStaffOrAuthenticatedUserOrReadOnly, IsOwnerOfCart
+from .permissions import IsOwnerOfCart
 from .serializers import (CategorySerializer,
                           ProductSerializer,
                           ShoppingCartSerializer,
+                          PutShoppingCartSerializer,
                           CartSerializer)
 
 
 class CategoryViewSet(ReadOnlyModelViewSet):
     """Просмотр всех категорий с подкатегориями."""
 
-    # http_method_names = ('get', 'post', 'patch', 'delete')
     serializer_class = CategorySerializer
-    permission_classes = (IsStaffOrAuthenticatedUserOrReadOnly,)
     def get_queryset(self):
         return Category.objects.filter(
             parent__isnull=True).prefetch_related('children')
 
 
-class ProductViewSet(ModelViewSet):
+class ProductViewSet(ReadOnlyModelViewSet):
     """Просмотр всех продуктов."""
 
     queryset = Product.objects.select_related('category')
     serializer_class = ProductSerializer
-    permission_classes = (IsStaffOrAuthenticatedUserOrReadOnly,)
 
     @staticmethod
     def add_method(serializer_cls, request, pk):
@@ -49,27 +47,29 @@ class ProductViewSet(ModelViewSet):
 
     @staticmethod
     def delete_method(model, request, pk):
-        if not Product.objects.filter(id=pk).exists():
-            return Response(
-                data={'error': 'Вы пытаетесь удалить несуществующий продукт'},
-                status=status.HTTP_404_NOT_FOUND
-            )
-        try:
-            cart_item = model.objects.get(user=request.user, product_id=pk)
-            if cart_item.quantity > 1:
-                cart_item.quantity -= 1
-                cart_item.save()
-                return Response(
-                    {'quantity': cart_item.quantity},
-                    status=status.HTTP_200_OK)
-            else:
-                cart_item.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-        except model.DoesNotExist:
-            return Response({'error': 'Нет в добавленных.'}, status=status.HTTP_400_BAD_REQUEST)
+        model.objects.filter(
+            user=request.user, product_id=pk).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @staticmethod
+    def put_method(serializer_cls, request, pk):
+        serializer = serializer_cls(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        ShoppingCart.objects.filter(
+            user=request.user, product_id=pk).update(
+                quantity=serializer.data['quantity'])
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(
+        detail=True, methods=('put',),
+        permission_classes=(IsOwnerOfCart,),serializer_class=PutShoppingCartSerializer
+    )
+    def put_shopping_cart(self, request, pk):
+        return self.put_method(PutShoppingCartSerializer, request, pk)
 
     @action(detail=True, methods=('post',),
-            permission_classes=(IsOwnerOfCart,))
+            permission_classes=(IsOwnerOfCart,),
+            serializer_class=None)
     def shopping_cart(self, request, pk):
         return self.add_method(ShoppingCartSerializer, request, pk)
 
