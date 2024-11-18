@@ -15,10 +15,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'title',
+        fields = ('id', 'title',
                   'slug', 'image',
                   'children'
-                  ]
+                  )
 
     def get_children(self, obj):
         children = obj.children.all()
@@ -75,7 +75,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['products', 'total_quantity', 'total_price']
+        fields = ('products', 'total_quantity', 'total_price')
 
     def get_total_quantity(self, obj):
         return sum(item.quantity for item in obj.shopping_carts.all())
